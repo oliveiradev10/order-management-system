@@ -17,7 +17,6 @@ public class ItemPedido {
     public void setProduto(Produto produto) {
         this.produto = produto;
     }
-
     public int getQuantidade() {
         return quantidade;
     }
@@ -27,8 +26,17 @@ public class ItemPedido {
     }
 
     public double subTotal(){
-        double total = produto.getPreco() * quantidade;
-        return total;
+      return produto.getPreco() * quantidade;
+
+    }
+
+    @Override
+    public String toString(){
+        return produto
+                + ", Quantidade: "
+                + quantidade
+                + ", Subtotal: "
+                + subTotal();
 
     }
 

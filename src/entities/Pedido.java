@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import enums.StatusPedido;
+import java.time.format.DateTimeFormatter;
 
 public class Pedido {
 
@@ -62,5 +63,48 @@ public class Pedido {
 
 
     }
+
+    public int quantidadeItens(){
+
+        int quantidade = 0;
+
+        for(ItemPedido item : itens) {
+            quantidade += item.getQuantidade();
+        }
+        return quantidade;
+
+    }
+
+
+    @Override
+    public String toString() {
+
+        String listaItens = "";
+
+        for(ItemPedido item : itens) {
+            listaItens += item + "\n";
+        }
+
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+        return "Hora do pedido: "
+                + momento.format(formato)
+                + "\nStatus do pedido: "
+                + statusPedido
+                + "\nCliente: "
+                + getCliente().getName()
+                + "\nEmail: "
+                + cliente.getEmail()
+                + "\nItens do pedido:\n"
+                + listaItens
+                + "\nQuantidade de itens: "
+                + quantidadeItens()
+                + "\nTotal: "
+                + total();
+
+    }
+
+
+
 
 }

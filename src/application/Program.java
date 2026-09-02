@@ -2,6 +2,7 @@ package application;
 
 import db.dao.ClienteDao;
 import db.DB;
+import db.dao.ItemPedidoDao;
 import db.dao.PedidoDao;
 import db.dao.ProdutoDao;
 import entities.Cliente;
@@ -24,6 +25,7 @@ public class Program {
         ClienteDao clienteDao = new ClienteDao(conn);
         ProdutoDao produtoDao = new ProdutoDao(conn);
         PedidoDao pedidoDao = new PedidoDao(conn);
+        ItemPedidoDao itemPedidoDao = new ItemPedidoDao(conn);
 
         Locale.setDefault(Locale.US);
         Scanner sc = new Scanner(System.in);
@@ -67,6 +69,8 @@ public class Program {
 
             ItemPedido itemPedido = new ItemPedido(produto, quantidade);
             pedido.addItem(itemPedido);
+
+            itemPedidoDao.insert(itemPedido, 1, 1);
         }
 
         pedido.setStatusPedido(StatusPedido.ENVIADO);

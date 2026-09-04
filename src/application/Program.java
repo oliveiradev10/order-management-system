@@ -40,13 +40,13 @@ public class Program {
 
         // --- 2. PERSISTÊNCIA DO CLIENTE ---
         Cliente cliente = new Cliente(nome, email);
-        clienteDao.insert(cliente);
+        int idClienteGerado = clienteDao.insert(cliente); // 1. Captura o ID retornado pelo banco
 
         LocalDateTime momento = LocalDateTime.now();
         StatusPedido statusPedido = StatusPedido.PROCESSANDO;
 
         Pedido pedido = new Pedido(momento, statusPedido, cliente);
-        pedidoDao.insert(pedido, 1);
+        int idPedidoGerado = pedidoDao.insert(pedido, idClienteGerado);
 
 
         System.out.println("Quantos itens terá o pedido?");
@@ -65,12 +65,12 @@ public class Program {
             sc.nextLine();
 
             Produto produto = new Produto(nomedoProduto, precodoProduto);
-            produtoDao.insert(produto);
+            int idProdutoGerado = produtoDao.insert(produto);
 
             ItemPedido itemPedido = new ItemPedido(produto, quantidade);
             pedido.addItem(itemPedido);
 
-            itemPedidoDao.insert(itemPedido, 1, 1);
+            itemPedidoDao.insert(itemPedido, idPedidoGerado, idProdutoGerado);
         }
 
         pedido.setStatusPedido(StatusPedido.ENVIADO);
